@@ -26,7 +26,6 @@ public class Pedido {
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	
-	
 	public Pedido() {
 		
 	}
