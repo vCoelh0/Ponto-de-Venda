@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -15,10 +16,17 @@ public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+    
 	private int quantiedade;
 	
 	@ManyToOne
+	@JoinColumn(name = "cardapio_id", nullable = false) // Relaciona com a tabela de Cardápio
 	private Cardapio itemCardapio;
+	
+	 @ManyToOne
+	 @JoinColumn(name = "pedido_id", nullable = false) // Relaciona com a tabela de Pedido
+	 private Pedido pedido;
+
 	
 	public ItemPedido() {
 		
@@ -47,6 +55,15 @@ public class ItemPedido {
 	public void setItemCardapio(Cardapio itemCardapio) {
 		this.itemCardapio = itemCardapio;
 	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
 	
 	
 }

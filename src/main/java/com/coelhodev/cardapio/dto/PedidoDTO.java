@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.coelhodev.cardapio.entities.ItemPedido;
 import com.coelhodev.cardapio.entities.Pedido;
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class PedidoDTO {
 
@@ -18,8 +18,7 @@ public class PedidoDTO {
 	public PedidoDTO() {
 		
 	}
-	
-	
+		
 	
 	public PedidoDTO(Long id, int numeroMesa, LocalDateTime dataHora, List<ItemPedido> itens) {
 		this.id = id;
