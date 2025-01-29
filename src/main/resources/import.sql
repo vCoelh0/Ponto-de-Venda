@@ -4,3 +4,11 @@ INSERT INTO tb_cardapio (name, price, description) VALUES ('Feijoada', 45.90, 'F
 INSERT INTO tb_cardapio (name, price, description) VALUES ('MilkShake', 19.90, 'Milshake de ovomaltine');
 INSERT INTO tb_cardapio (name, price, description) VALUES ('Suco de Laranja', 8.50, 'Suco de laranja natural');
 INSERT INTO tb_cardapio (name, price, description) VALUES ('Refrigerante', 7.00, 'Refrigerante de lata 350ML');
+
+
+INSERT INTO tb_pedido (numero_mesa, data_hora) VALUES (12, '2024-01-05T12:34:45');
+INSERT INTO tb_pedido (numero_mesa, data_hora) VALUES (5, '2024-01-05T15:20:10');
+
+
+INSERT INTO tb_item_pedido (quantiedade, cardapio_id, pedido_id) VALUES (2, 1, 1);
+INSERT INTO tb_item_pedido (quantiedade, cardapio_id, pedido_id) VALUES (1, 2, 1);

@@ -1,5 +1,7 @@
 package com.coelhodev.cardapio.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,13 +31,17 @@ public class ItemPedidoService {
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado!"));
 		
 		
-		//verificar se o item existe no cardapio.
-		Cardapio itemCardapio = cardapioRepository.findById(dto.getItemCardapioId())
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item não encontrado no cardapio!"));
+		
+		Optional<Cardapio> itemCardapio = cardapioRepository.findById(dto.getItemCardapioId());
+	    if (itemCardapio.isEmpty()) {
+	        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Item do cardápio não encontrado!");
+	    }
 		
 		ItemPedido itemPedido = new ItemPedido();
 		itemPedido.setQuantiedade(dto.getQuantidade());
-		itemPedido.setItemCardapio(itemCardapio);
+		
+		System.out.println("ItemCardapio encontrado: " + itemCardapio.get());
+		itemPedido.setItemCardapio(itemCardapio.get());
 		itemPedido.setPedido(pedido);
 		
 		
