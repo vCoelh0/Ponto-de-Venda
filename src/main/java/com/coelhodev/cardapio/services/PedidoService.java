@@ -57,4 +57,13 @@ public class PedidoService {
 	}
 	
 	
+	public List<PedidoDTO> listar() {
+		 List<Pedido> result = pedidoRepository.findAllWithItens();
+		 return result.stream().map(x -> new PedidoDTO(x)).toList();
+		 
+	}
+	
+	
+	
+	
 }

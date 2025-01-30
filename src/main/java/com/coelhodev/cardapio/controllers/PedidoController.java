@@ -1,6 +1,9 @@
 package com.coelhodev.cardapio.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,12 @@ public class PedidoController {
 	@PostMapping
 	public PedidoDTO adicionar (@RequestBody  PedidoDTO dto) {
 		return service.adicionar(dto);	
+	}
+	
+	
+	@GetMapping
+	public List<PedidoDTO> listar() {
+		return service.listar();
 	}
 	
 
