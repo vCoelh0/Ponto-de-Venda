@@ -63,6 +63,10 @@ public class PedidoService {
 		 
 	}
 	
+	@Transactional
+	public void deletar(Long id) {
+		pedidoRepository.deleteById(id);	
+	}
 	
 	
 	
