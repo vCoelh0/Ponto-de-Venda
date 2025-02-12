@@ -42,7 +42,7 @@ public class PedidoService {
 	                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item do cardápio não encontrado!"));
 		
 			  	ItemPedido itemPedido = new ItemPedido();
-	            itemPedido.setQuantiedade(itemDto.getQuantidade());
+	            itemPedido.setQuantidade(itemDto.getQuantidade());
 	            itemPedido.setItemCardapio(itemCardapio);
 	            itemPedido.setPedido(pedido); 
 			  
@@ -68,6 +68,34 @@ public class PedidoService {
 		pedidoRepository.deleteById(id);	
 	}
 	
+	@Transactional
+	public PedidoDTO atualizar (Long id, PedidoDTO dto) {	
+		
+		Pedido pedido = pedidoRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
+				
+		//atualizar dados do pedido
+		pedido.setNumeroMesa(dto.getNumeroMesa());
+		pedido.setDataHora(dto.getDataHora());
+		
+		pedido.getItens().clear();
+		
+		for (ItemPedidoDTO itemDto : dto.getItens()) {
+	        Cardapio itemCardapio = cardapioRepository.findById(itemDto.getItemCardapioId())
+	                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item do cardápio não encontrado!"));
+
+	        ItemPedido itemPedido = new ItemPedido();
+	        
+	        itemPedido.setQuantidade(itemDto.getQuantidade());
+	        itemPedido.setItemCardapio(itemCardapio);
+	        itemPedido.setPedido(pedido);
+        	
+	        pedido.getItens().add(itemPedido);
+        
+		}
+		
+		 pedido = pedidoRepository.save(pedido);	 	
 	
-	
+	   	return new PedidoDTO(pedido);
+	}
 }

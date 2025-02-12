@@ -38,7 +38,7 @@ public class ItemPedidoService {
 	    }
 		
 		ItemPedido itemPedido = new ItemPedido();
-		itemPedido.setQuantiedade(dto.getQuantidade());
+		itemPedido.setQuantidade(dto.getQuantidade());
 		
 		System.out.println("ItemCardapio encontrado: " + itemCardapio.get());
 		itemPedido.setItemCardapio(itemCardapio.get());

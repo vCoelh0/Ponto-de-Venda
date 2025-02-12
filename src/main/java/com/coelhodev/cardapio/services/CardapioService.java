@@ -56,8 +56,7 @@ public class CardapioService {
 	
 	@Transactional
 	public void deletar(Long id) {
-		repository.deleteById(id);
-		
+		repository.deleteById(id);	
 	}
 	
 	

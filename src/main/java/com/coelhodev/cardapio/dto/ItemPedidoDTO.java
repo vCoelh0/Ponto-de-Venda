@@ -15,7 +15,7 @@ public class ItemPedidoDTO {
 
 	 public ItemPedidoDTO(ItemPedido entity) {
 	        this.id = entity.getId();
-	        this.quantidade = entity.getQuantiedade();
+	        this.quantidade = entity.getQuantidade();
 	        this.itemCardapioId = entity.getItemCardapio().getId();
 	        this.pedidoId = entity.getPedido().getId();
 	    }

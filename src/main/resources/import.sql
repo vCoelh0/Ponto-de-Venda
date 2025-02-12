@@ -10,5 +10,5 @@ INSERT INTO tb_pedido (numero_mesa, data_hora) VALUES (12, '2024-01-05T12:34:45'
 INSERT INTO tb_pedido (numero_mesa, data_hora) VALUES (5, '2024-01-05T15:20:10');
 
 
-INSERT INTO tb_item_pedido (quantiedade, cardapio_id, pedido_id) VALUES (2, 1, 1);
-INSERT INTO tb_item_pedido (quantiedade, cardapio_id, pedido_id) VALUES (1, 2, 1);
+INSERT INTO tb_item_pedido (quantidade, cardapio_id, pedido_id) VALUES (2, 1, 1);
+INSERT INTO tb_item_pedido (quantidade, cardapio_id, pedido_id) VALUES (1, 2, 2);

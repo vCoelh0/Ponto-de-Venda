@@ -17,7 +17,7 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
     
-	private int quantiedade;
+	private int quantidade;
 	
 	@ManyToOne
 	@JoinColumn(name = "cardapio_id", nullable = false) // Relaciona com a tabela de Cardápio
@@ -40,12 +40,12 @@ public class ItemPedido {
 		this.id = id;
 	}
 
-	public int getQuantiedade() {
-		return quantiedade;
+	public int getQuantidade() {
+		return quantidade;
 	}
 
-	public void setQuantiedade(int quantiedade) {
-		this.quantiedade = quantiedade;
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public Cardapio getItemCardapio() {
