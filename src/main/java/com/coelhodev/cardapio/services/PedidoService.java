@@ -2,6 +2,8 @@ package com.coelhodev.cardapio.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,20 +80,27 @@ public class PedidoService {
 		pedido.setNumeroMesa(dto.getNumeroMesa());
 		pedido.setDataHora(dto.getDataHora());
 		
-		pedido.getItens().clear();
+		 // Mapear os itens existentes para facilitar a atualização
+		Map<Long, ItemPedido> mapaItens = pedido.getItens().stream()
+				.collect(Collectors.toMap(item -> item.getItemCardapio().getId(), item -> item));
 		
 		for (ItemPedidoDTO itemDto : dto.getItens()) {
 	        Cardapio itemCardapio = cardapioRepository.findById(itemDto.getItemCardapioId())
 	                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item do cardápio não encontrado!"));
 
-	        ItemPedido itemPedido = new ItemPedido();
+	        if(mapaItens.containsKey(itemDto.getItemCardapioId())) {
+	        	ItemPedido itemPedido = mapaItens.get(itemDto.getItemCardapioId());
+	        	itemPedido.setQuantidade(itemDto.getQuantidade());
+	        } else {
 	        
-	        itemPedido.setQuantidade(itemDto.getQuantidade());
-	        itemPedido.setItemCardapio(itemCardapio);
-	        itemPedido.setPedido(pedido);
+	        ItemPedido novoItem = new ItemPedido();
+	        
+	        novoItem.setQuantidade(itemDto.getQuantidade());
+	        novoItem.setItemCardapio(itemCardapio);
+	        novoItem.setPedido(pedido);
         	
-	        pedido.getItens().add(itemPedido);
-        
+	        pedido.getItens().add(novoItem);
+	        }
 		}
 		
 		 pedido = pedidoRepository.save(pedido);	 	
