@@ -1,8 +1,10 @@
 package com.coelhodev.cardapio.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.coelhodev.cardapio.dto.CardapioDTO;
 import com.coelhodev.cardapio.services.CardapioService;
@@ -23,24 +26,29 @@ public class CardapioController {
 	private CardapioService service;	
 	
 	@PostMapping
-	public CardapioDTO adicionar (@RequestBody  CardapioDTO dto) {
-		return service.adicionar(dto);	
+	public ResponseEntity <CardapioDTO> adicionar (@RequestBody  CardapioDTO dto) {
+			dto = service.adicionar(dto);	
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+					.buildAndExpand(dto.getId()).toUri();
+			return ResponseEntity.created(uri).body(dto);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public CardapioDTO atualizar (@PathVariable Long id,@RequestBody CardapioDTO dto) {
+	public ResponseEntity<CardapioDTO> atualizar (@PathVariable Long id,@RequestBody CardapioDTO dto) {
 		dto = service.atualizar(id, dto);
-		return dto;
+		return ResponseEntity.ok(dto);
 	}
 	
 	@GetMapping
-	public List<CardapioDTO> listar() {
-		return service.listar();
+	public ResponseEntity<List<CardapioDTO>> listar() {
+		List<CardapioDTO> dto =  service.listar();
+		return ResponseEntity.ok(dto);
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deletar(@PathVariable Long id) {
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		service.deletar(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	
