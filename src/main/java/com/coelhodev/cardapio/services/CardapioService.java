@@ -3,12 +3,16 @@ package com.coelhodev.cardapio.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.coelhodev.cardapio.dto.CardapioDTO;
 import com.coelhodev.cardapio.entities.Cardapio;
 import com.coelhodev.cardapio.repository.CardapioRepository;
+import com.coelhodev.cardapio.services.exceptions.DatabaseException;
+import com.coelhodev.cardapio.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -35,6 +39,7 @@ public class CardapioService {
 	@Transactional
 	public CardapioDTO atualizar (Long id, CardapioDTO dto) {
 		
+		try {
 		Cardapio cardapio = repository.getReferenceById(id);		
 		
 		cardapio.setName(dto.getName());
@@ -45,6 +50,10 @@ public class CardapioService {
 		 cardapio = repository.save(cardapio);
 		
 		 return new CardapioDTO(cardapio);	
+		}
+			catch(EntityNotFoundException e) {
+				throw new ResourceNotFoundException("Recurso não encontrado");
+			}
 	}
 	
 	
@@ -56,11 +65,18 @@ public class CardapioService {
 	
 	@Transactional
 	public void deletar(Long id) {
-		repository.deleteById(id);	
+		if(!repository.existsById(id)) {
+			throw new ResourceNotFoundException("Recurso não encontrado");
+		}
+			try {
+				repository.deleteById(id);
+			}
+			
+			catch(DataIntegrityViolationException e) {
+				throw new DatabaseException("Falha de integridade referencial");
+			}
 	}
 	
-	
-	
-	
-	
 }
+	
+	
