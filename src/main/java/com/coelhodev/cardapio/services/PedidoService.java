@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,7 +18,10 @@ import com.coelhodev.cardapio.entities.ItemPedido;
 import com.coelhodev.cardapio.entities.Pedido;
 import com.coelhodev.cardapio.repository.CardapioRepository;
 import com.coelhodev.cardapio.repository.PedidoRepository;
+import com.coelhodev.cardapio.services.exceptions.DatabaseException;
+import com.coelhodev.cardapio.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -67,7 +71,16 @@ public class PedidoService {
 	
 	@Transactional
 	public void deletar(Long id) {
-		pedidoRepository.deleteById(id);	
+		if(!pedidoRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Recurso não encontrado");
+		}
+			try {
+				pedidoRepository.deleteById(id);
+			}
+			
+			catch(DataIntegrityViolationException e) {
+				throw new DatabaseException("Falha de integridade referencial");
+			}
 	}
 	
 	@Transactional
@@ -106,5 +119,6 @@ public class PedidoService {
 		 pedido = pedidoRepository.save(pedido);	 	
 	
 	   	return new PedidoDTO(pedido);
+		
 	}
 }
