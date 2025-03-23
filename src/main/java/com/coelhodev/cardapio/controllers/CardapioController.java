@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.coelhodev.cardapio.dto.CardapioDTO;
 import com.coelhodev.cardapio.services.CardapioService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/cardapio")
 public class CardapioController {
@@ -26,7 +28,7 @@ public class CardapioController {
 	private CardapioService service;	
 	
 	@PostMapping
-	public ResponseEntity <CardapioDTO> adicionar (@RequestBody  CardapioDTO dto) {
+	public ResponseEntity <CardapioDTO> adicionar (@Valid @RequestBody  CardapioDTO dto) {
 			dto = service.adicionar(dto);	
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 					.buildAndExpand(dto.getId()).toUri();
@@ -34,7 +36,7 @@ public class CardapioController {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CardapioDTO> atualizar (@PathVariable Long id,@RequestBody CardapioDTO dto) {
+	public ResponseEntity<CardapioDTO> atualizar (@PathVariable Long id, @Valid @RequestBody CardapioDTO dto) {
 		dto = service.atualizar(id, dto);
 		return ResponseEntity.ok(dto);
 	}
