@@ -12,6 +12,7 @@ public class PedidoDTO {
 	private Long id;
 	private int numeroMesa;
 	private	LocalDateTime dataHora;
+	private Double totalPrice;
 	private List<ItemPedidoDTO> itens;
 	
 	
@@ -20,10 +21,11 @@ public class PedidoDTO {
 	}
 		
 	
-	public PedidoDTO(Long id, int numeroMesa, LocalDateTime dataHora, List<ItemPedidoDTO> itens) {
+	public PedidoDTO(Long id, int numeroMesa, LocalDateTime dataHora, Double totalPrice, List<ItemPedidoDTO> itens) {
 		this.id = id;
 		this.numeroMesa = numeroMesa;
 		this.dataHora = dataHora;
+		this.totalPrice = totalPrice;
 		this.itens = itens;
 	}
 
@@ -32,6 +34,7 @@ public class PedidoDTO {
 		id = entity.getId();
 		numeroMesa = entity.getNumeroMesa();
 		dataHora = entity.getDataHora();
+		totalPrice = entity.getTotalPrice();
 		this.itens = entity.getItens().stream().map(ItemPedidoDTO::new).collect(Collectors.toList());
 	}
 
@@ -56,6 +59,18 @@ public class PedidoDTO {
 	}
 
 
+	
+	
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+
 	public LocalDateTime getDataHora() {
 		return dataHora;
 	}
@@ -74,6 +89,8 @@ public class PedidoDTO {
 	public void setItens(List<ItemPedidoDTO> itens) {
 		this.itens = itens;
 	}
+	
+	
 
 
 	

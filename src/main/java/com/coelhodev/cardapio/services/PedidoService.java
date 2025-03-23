@@ -56,6 +56,7 @@ public class PedidoService {
 		  }
 		  
 		pedido.setItens(itensPedido);
+		pedido.setTotalPrice(pedido.calcularTotal());
 		
 		pedido = pedidoRepository.save(pedido);
 		
@@ -116,6 +117,7 @@ public class PedidoService {
 	        }
 		}
 		
+		 pedido.setTotalPrice(pedido.calcularTotal());
 		 pedido = pedidoRepository.save(pedido);	 	
 	
 	   	return new PedidoDTO(pedido);

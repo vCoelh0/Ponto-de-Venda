@@ -22,9 +22,16 @@ public class Pedido {
 	private Long id;
 	private int numeroMesa;
 	private	LocalDateTime dataHora;
+	private Double totalPrice;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<ItemPedido> itens = new ArrayList<>();
+	
+	 public Double calcularTotal() {
+	        return itens.stream()
+	                .mapToDouble(item -> item.getItemCardapio().getPrice() * item.getQuantidade())
+	                .sum();
+	    }
 	
 	
 	public Pedido() {
@@ -64,6 +71,20 @@ public class Pedido {
 	public void setItens(List<ItemPedido> itens) {
 		this.itens = itens;
 	}
+
+
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	
 	
 	
 }
