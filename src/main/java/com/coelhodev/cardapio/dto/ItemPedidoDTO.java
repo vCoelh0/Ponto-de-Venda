@@ -17,7 +17,7 @@ public class ItemPedidoDTO {
 	        this.id = entity.getId();
 	        this.quantidade = entity.getQuantidade();
 	        this.itemCardapioId = entity.getItemCardapio().getId();
-	        this.pedidoId = entity.getPedido().getId();
+	        this.pedidoId = entity.getPedido() != null ? entity.getPedido().getId() : null;
 	    }
 
 	public Long getId() {
@@ -35,18 +35,6 @@ public class ItemPedidoDTO {
 	public Long getPedidoId() {
 		return pedidoId;
 	}
-
-	
-	 
-	
-
-
-	
-	
-	
-	
-	
-	
 	
 	
 }

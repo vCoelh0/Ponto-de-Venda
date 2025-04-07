@@ -21,7 +21,7 @@ import com.coelhodev.cardapio.repository.PedidoRepository;
 import com.coelhodev.cardapio.services.exceptions.DatabaseException;
 import com.coelhodev.cardapio.services.exceptions.ResourceNotFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import jakarta.transaction.Transactional;
 
 @Service

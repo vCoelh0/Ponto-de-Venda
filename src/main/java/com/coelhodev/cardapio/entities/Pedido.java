@@ -20,11 +20,12 @@ public class Pedido {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private int numeroMesa;
 	private	LocalDateTime dataHora;
 	private Double totalPrice;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<ItemPedido> itens = new ArrayList<>();
 	
 	 public Double calcularTotal() {
